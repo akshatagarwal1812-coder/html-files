@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Certifications</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(-45deg, #f9f9f9, #e8f0fe, #f4f8fb, #eef6f9);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        main {
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+
+        main section {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            text-align: center;
+            animation: fadeInUp 0.7s ease both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <main>
+        <section>
+            <h2>My Certifications</h2>
+            <ul>
+                <li>Certification 1
+                    <img src="certifications/python-3.jpg" alt="Python 3 Certification">
+                </li>
+                <li>Certification 2
+                    <img src="certifications/python-certificate-final.jpg" alt="Python Certificate Final">
+                </li>
+                <li>Certification 3
+                    <img src="certifications/python-initial-certificate.jpg" alt="Python Initial Certificate">
+                </li>
+                <li>Certification 4
+                    <img src="certifications/python-oop-certificate.jpg" alt="Python OOP Certificate">
+                </li>
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 My Portfolio. All rights reserved.</p>
+    </footer>
+
+</body>
+
+</html>

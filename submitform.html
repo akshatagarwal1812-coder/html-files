@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Form</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #f4f6f8;
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        form {
+            background: #ffffff;
+            width: 100%;
+            max-width: 480px;
+            padding: 32px;
+            border-radius: 10px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+        }
+
+        form div {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            font-size: 14px;
+            color: #333;
+        }
+
+        input[type="text"],
+        input[type="tel"],
+        input[type="email"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px 12px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            background: #fafafa;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        input[type="text"]:focus,
+        input[type="tel"]:focus,
+        input[type="email"]:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #4a90e2;
+            box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.15);
+            background: #fff;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 90px;
+        }
+
+        /* Subscription radio group */
+        form div p {
+            margin: 0 0 10px;
+            font-weight: 600;
+            font-size: 14px;
+            color: #333;
+        }
+
+        input[type="radio"] {
+            margin-right: 6px;
+        }
+
+        input[type="radio"]+label {
+            display: inline-block;
+            margin-right: 16px;
+            font-weight: normal;
+            color: #444;
+        }
+
+        /* Terms checkbox row */
+        input[type="checkbox"] {
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+
+        input[type="checkbox"]+label,
+        label[for="check"] {
+            display: inline;
+            font-weight: normal;
+            color: #444;
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            background: #4a90e2;
+            color: #fff;
+            font-size: 15px;
+            font-weight: 600;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        input[type="submit"]:hover {
+            background: #3a7bc8;
+        }
+
+        input[type="submit"]:active {
+            background: #2f66a8;
+        }
+    </style>
+</head>
+
+<body>
+    <form action="/submit.py" method="post">
+        <div>
+            <label for="name">NAME</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+        <div>
+            <label for="phone">Phone</label>
+            <input type="tel" id="phone" name="phone" required>
+        </div>
+        <div>
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+        <div>
+            <label for="gender">GENDER</label>
+            <select id="gender" name="gender" required>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+            </select>
+        </div>
+        <div>
+            <p>Subscription</p>
+            <input type="radio" id="basic" name="subscription" value="basic" required>
+            <label for="basic">Basic</label>
+            <input type="radio" id="premium" name="subscription" value="premium" required>
+            <label for="premium">Premium</label>
+            <input type="radio" id="enterprise" name="subscription" value="enterprise" required>
+            <label for="enterprise">Enterprise</label>
+            <input type="radio" id="VIP" name="subscription" value="VIP" required>
+            <label for="VIP">VIP</label>
+
+        </div>
+        <div>
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="4" cols="50" required></textarea>
+        </div>
+        <div>
+            <label for="check">agree to terms and conditions</label>
+            <input type="checkbox" id="check" name="check" required>
+        </div>
+        <input type="submit" value="Submit">
+
+</body>
+
+</html>
