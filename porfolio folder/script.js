@@ -1,42 +1,62 @@
-// Wait for the DOM to fully load before running any code
-document.addEventListener("DOMContentLoaded", () => {
+/* ==========================================================================
+   Akshat Agarwal — Portfolio: interactions
+   Works against the original markup (no classes/ids needed in the HTML).
+   Script tag can stay in <head> — everything below waits for DOMContentLoaded.
+   ========================================================================== */
 
-    // 1. Smooth scrolling for internal links (if you add any # links later)
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener("click", function (e) {
-            e.preventDefault();
-            document.querySelector(this.getAttribute("href")).scrollIntoView({
-                behavior: "smooth"
-            });
-        });
+document.addEventListener('DOMContentLoaded', () => {
+
+  const nav = document.querySelector('header nav');
+
+  /* ---------- Inject a mobile hamburger toggle ---------- */
+  if (nav) {
+    const toggle = document.createElement('button');
+    toggle.className = 'nav-toggle';
+    toggle.type = 'button';
+    toggle.setAttribute('aria-label', 'Toggle navigation');
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.innerHTML = '<span></span><span></span><span></span>';
+
+    nav.parentNode.insertBefore(toggle, nav);
+
+    toggle.addEventListener('click', () => {
+      const isOpen = nav.classList.toggle('is-open');
+      toggle.classList.toggle('is-open', isOpen);
+      toggle.setAttribute('aria-expanded', String(isOpen));
     });
+  }
 
-    // 2. Highlight the current page's nav link
-    const currentPage = window.location.pathname.split("/").pop() || "index.html";
-    document.querySelectorAll("header nav ul li a").forEach(link => {
-        const linkPage = link.getAttribute("href").split("/").pop();
-        if (linkPage === currentPage) {
-            link.classList.add("active");
-        }
-    });
+  /* ---------- Highlight the current page in the nav ---------- */
+  const navLinks = document.querySelectorAll('header nav ul li a');
+  const currentFile = window.location.pathname.split('/').pop() || 'index.html';
 
-    // 3. Simple fade-in animation for sections on page load
-    const sections = document.querySelectorAll("main section");
-    sections.forEach((section, index) => {
-        section.style.opacity = "0";
-        section.style.transform = "translateY(20px)";
-        section.style.transition = "opacity 0.6s ease, transform 0.6s ease";
-        setTimeout(() => {
-            section.style.opacity = "1";
-            section.style.transform = "translateY(0)";
-        }, 200 * (index + 1));
-    });
-
-    // 4. Dynamic footer year (so you never have to update it manually)
-    const footerText = document.querySelector("footer p");
-    if (footerText) {
-        const currentYear = new Date().getFullYear();
-        footerText.innerHTML = footerText.innerHTML.replace(/\d{4}/, currentYear);
+  navLinks.forEach(link => {
+    const linkFile = link.getAttribute('href').split('/').pop();
+    if (linkFile === currentFile) {
+      link.setAttribute('data-current', 'true');
     }
+  });
+
+  /* ---------- Always-current footer year ---------- */
+  const footerP = document.querySelector('footer p');
+  if (footerP) {
+    footerP.innerHTML = footerP.innerHTML.replace(/\b(19|20)\d{2}\b/, new Date().getFullYear());
+  }
+
+  /* ---------- Gentle one-time entrance for the two main sections ---------- */
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const sections = document.querySelectorAll('main > section');
+
+  if (!reduceMotion) {
+    sections.forEach((el, i) => {
+      el.animate(
+        [
+          { opacity: 0, transform: 'translateY(14px)' },
+          { opacity: 1, transform: 'translateY(0)' }
+        ],
+        { duration: 500, delay: i * 120, easing: 'cubic-bezier(.2,.7,.3,1)', fill: 'both' }
+      );
+    });
+  }
 
 });

@@ -1,136 +1,291 @@
-/* Reset & base styles */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* ==========================================================================
+   Akshat Agarwal — Portfolio
+   Targets the original markup as-is: no classes or ids required.
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap');
+
+:root{
+  --ink:        #12131c;
+  --muted:      #5b5f72;
+  --paper:      #f4f6fb;
+  --card:       #ffffff;
+  --line:       #e1e4ee;
+  --accent:     #3d5afe;
+  --accent-ink: #26339e;
+  --gold:       #ffb238;
+
+  --font-display: 'Space Grotesk', 'Inter', sans-serif;
+  --font-body:    'Inter', sans-serif;
+
+  --radius-lg: 22px;
+  --radius-md: 12px;
 }
 
-body {
-    font-family: 'Segoe UI', Arial, sans-serif;
-    line-height: 1.6;
-    color: #333;
-    background-color: #f9f9f9;
+*, *::before, *::after{ box-sizing: border-box; }
+
+html{ scroll-behavior: smooth; }
+
+body{
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* Header */
-header {
-    background-color: #2c3e50;
-    color: #fff;
-    padding: 30px 20px;
-    text-align: center;
+a{ color: var(--accent-ink); text-decoration: none; }
+a:hover{ text-decoration: underline; }
+
+img{ max-width: 100%; display: block; }
+
+hr{
+  border: none;
+  border-top: 2px solid var(--gold);
+  width: 56px;
+  margin: 18px 0;
 }
 
-header h1 {
-    font-size: 2rem;
-    margin-bottom: 15px;
+/* ---------- Header & nav (plain tags) ---------- */
+
+header{
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  padding: 18px 32px;
+  background: rgba(244, 246, 251, 0.9);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--line);
 }
 
-header nav ul {
-    list-style: none;
-    display: flex;
-    justify-content: center;
-    gap: 30px;
+header h1{
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 20px;
+  letter-spacing: -0.01em;
+  margin: 0;
+  margin-right: auto;
 }
 
-header nav ul li a {
-    color: #ecf0f1;
-    text-decoration: none;
-    font-weight: 500;
-    padding: 6px 12px;
-    border-radius: 4px;
-    transition: background-color 0.2s ease;
+header nav{
+  /* target for the JS-injected mobile toggle to sit next to */
 }
 
-header nav ul li a:hover {
-    background-color: #34495e;
+header nav ul{
+  list-style: none;
+  display: flex;
+  gap: 26px;
+  margin: 0;
+  padding: 0;
 }
 
-/* Main content */
-main {
-    max-width: 800px;
-    margin: 40px auto;
-    padding: 0 20px;
+header nav ul li a{
+  color: var(--ink);
+  font-weight: 500;
+  font-size: 14.5px;
+  padding: 6px 2px;
+  position: relative;
+  text-decoration: none;
 }
 
-section {
-    background-color: #fff;
-    border-radius: 8px;
-    padding: 30px;
-    margin-bottom: 25px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    text-align: center;
+header nav ul li a::after{
+  content: "";
+  position: absolute;
+  left: 0; right: 100%;
+  bottom: 0;
+  height: 2px;
+  background: var(--accent);
+  transition: right .2s ease;
 }
 
-section img {
-    border-radius: 50%;
-    object-fit: cover;
-    border: 4px solid #2c3e50;
+header nav ul li a:hover::after,
+header nav ul li a:focus-visible::after{ right: 0; }
+
+/* Highlighted by script.js when the link matches the current page */
+header nav ul li a[data-current="true"]{ color: var(--accent-ink); }
+header nav ul li a[data-current="true"]::after{ right: 0; }
+
+/* Mobile menu button injected by script.js */
+.nav-toggle{
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  padding: 6px;
+  cursor: pointer;
+  margin-left: auto;
+}
+.nav-toggle span{
+  width: 22px; height: 2px;
+  background: var(--ink);
+  border-radius: 2px;
+  transition: transform .25s ease, opacity .25s ease;
+}
+.nav-toggle.is-open span:nth-child(1){ transform: translateY(7px) rotate(45deg); }
+.nav-toggle.is-open span:nth-child(2){ opacity: 0; }
+.nav-toggle.is-open span:nth-child(3){ transform: translateY(-7px) rotate(-45deg); }
+
+/* ---------- Main content ---------- */
+
+main{
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 64px 32px 40px;
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 48px;
+  align-items: start;
 }
 
-section h1 {
-    font-size: 2rem;
-    color: #2c3e50;
-    margin-top: 10px;
+/* First section = photo */
+main section:first-of-type{
+  position: relative;
 }
 
-section h2 {
-    font-size: 1.4rem;
-    color: #4a90e2;
-    font-weight: 500;
-    margin-top: 5px;
+main section:first-of-type::before{
+  content: "";
+  position: absolute;
+  top: 14px; left: 14px;
+  width: 200px; height: 200px;
+  background: var(--gold);
+  border-radius: var(--radius-lg);
+  z-index: 0;
 }
 
-section h3 {
-    font-size: 1.1rem;
-    color: #777;
-    font-weight: 400;
-    margin-bottom: 15px;
+main section:first-of-type img{
+  position: relative;
+  z-index: 1;
+  width: 200px !important;
+  height: 200px !important;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  border: 4px solid var(--card);
+  box-shadow: 0 20px 40px -20px rgba(18, 19, 28, 0.35);
 }
 
-section hr {
-    border: none;
-    border-top: 1px solid #ddd;
-    width: 60%;
-    margin: 15px auto;
+/* Second section = bio */
+main section:nth-of-type(2){
+  color: var(--ink);
 }
 
-section p {
-    text-align: left;
-    margin-bottom: 15px;
-    color: #444;
+/* Intro paragraph (first p in the bio section) */
+main section:nth-of-type(2) > p:first-of-type{
+  font-size: 16px;
+  color: var(--muted);
+  max-width: 62ch;
+  margin: 0 0 22px;
 }
 
-section p strong {
-    color: #2c3e50;
+/* Name */
+main section:nth-of-type(2) h1{
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(28px, 3.6vw, 38px);
+  letter-spacing: -0.01em;
+  margin: 0;
 }
 
-section a {
-    color: #4a90e2;
-    text-decoration: none;
-    font-weight: 600;
+/* Role */
+main section:nth-of-type(2) h2{
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 17px;
+  color: var(--accent-ink);
+  margin: 0 0 30px;
 }
 
-section a:hover {
-    text-decoration: underline;
+/* "my portfolio" label */
+main section:nth-of-type(2) h3{
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--muted);
+  text-transform: none;
+  margin: 0 0 10px;
 }
 
-/* Footer */
-footer {
-    text-align: center;
-    padding: 20px;
-    background-color: #2c3e50;
-    color: #ecf0f1;
-    font-size: 0.9rem;
+/* Long bio paragraph */
+main section:nth-of-type(2) > p:nth-of-type(2){
+  max-width: 66ch;
+  font-size: 15px;
+  margin: 0 0 20px;
 }
 
-/* Responsive */
-@media (max-width: 600px) {
-    header nav ul {
-        flex-direction: column;
-        gap: 10px;
-    }
+main section:nth-of-type(2) u{
+  text-decoration-color: var(--gold);
+  text-decoration-thickness: 2px;
+}
 
-    section {
-        padding: 20px;
-    }
+/* Trailing "here is my linkedin profile" text + link */
+main section:nth-of-type(2) a{
+  font-weight: 600;
+  border-bottom: 1px solid var(--accent);
+}
+main section:nth-of-type(2) a:hover{
+  text-decoration: none;
+  color: var(--accent);
+}
+
+/* ---------- Footer ---------- */
+
+footer{
+  border-top: 1px solid var(--line);
+  padding: 26px 32px;
+  text-align: center;
+}
+
+footer p{
+  margin: 0;
+  font-size: 13.5px;
+  color: var(--muted);
+}
+
+/* ---------- Focus states ---------- */
+
+a:focus-visible,
+button:focus-visible{
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ---------- Reduced motion ---------- */
+
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior: auto; }
+  header nav ul li a::after{ transition: none; }
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 760px){
+  main{ grid-template-columns: 1fr; }
+  main section:first-of-type{ margin: 0 auto 8px; width: 200px; }
+
+  .nav-toggle{ display: flex; }
+
+  header nav{
+    flex-basis: 100%;
+    display: none;
+  }
+  header nav.is-open{ display: block; }
+
+  header nav ul{
+    flex-direction: column;
+    gap: 4px;
+    padding-top: 10px;
+    border-top: 1px solid var(--line);
+  }
+  header nav ul li a{ display: block; padding: 10px 4px; }
+}
+
+@media (max-width: 420px){
+  main{ padding: 48px 20px 32px; }
+  header{ padding: 16px 20px; }
 }

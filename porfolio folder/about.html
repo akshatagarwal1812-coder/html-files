@@ -6,6 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Me</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600&display=swap');
+
+        body {
+            font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+            background-color: #f4f2ff;
+            color: #2b2d3a;
+            margin: 0;
+            padding: 0;
+        }
+
         main {
             max-width: 700px;
             margin: 50px auto;
@@ -13,18 +23,19 @@
         }
 
         main section {
-            background-color: #fff;
-            border-radius: 8px;
-            padding: 30px;
+            background-color: #ffffff;
+            border-radius: 20px;
+            padding: 34px;
             margin-bottom: 25px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 12px 30px -14px rgba(123, 110, 246, 0.35);
             text-align: center;
         }
 
         main section img {
             border-radius: 50%;
             object-fit: cover;
-            border: 4px solid #2c3e50;
+            border: 4px solid #7b6ef6;
+            box-shadow: 0 0 0 6px #fff2c2;
             display: block;
             margin: 0 auto;
         }
@@ -32,25 +43,19 @@
         main section p {
             text-align: left;
             line-height: 1.7;
-            color: #444;
+            color: #4a4c5c;
             font-size: 1rem;
         }
 
         main section p strong {
-            color: #2c3e50;
+            font-family: 'Sora', 'Inter', sans-serif;
+            color: #6a5cf0;
         }
 
         main section p u {
-            color: #4a90e2;
-            text-decoration-color: #4a90e2;
-        }
-
-        body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background-color: #f9f9f9;
-            color: #333;
-            margin: 0;
-            padding: 0;
+            color: #b8860b;
+            text-decoration-color: #ffcf3f;
+            text-decoration-thickness: 2px;
         }
     </style>
 </head>
@@ -71,6 +76,54 @@
             </p>
         </section>
     </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('main section');
+            const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+            // Gentle one-time fade/slide-in for each card, in order.
+            if (!reduceMotion) {
+                sections.forEach((section, i) => {
+                    section.animate(
+                        [
+                            { opacity: 0, transform: 'translateY(14px)' },
+                            { opacity: 1, transform: 'translateY(0)' }
+                        ],
+                        { duration: 500, delay: i * 150, easing: 'cubic-bezier(.2,.7,.3,1)', fill: 'both' }
+                    );
+                });
+            }
+
+            // If the profile photo fails to load, fall back gracefully
+            // instead of showing a broken-image icon.
+            const photo = document.querySelector('main section img');
+            if (photo) {
+                photo.addEventListener('error', () => {
+                    photo.style.display = 'none';
+                    const fallback = document.createElement('div');
+                    fallback.textContent = 'AA';
+                    fallback.style.cssText = `
+                        width: 200px;
+                        height: 200px;
+                        margin: 0 auto;
+                        border-radius: 50%;
+                        border: 4px solid #7b6ef6;
+                        box-shadow: 0 0 0 6px #fff2c2;
+                        background-color: #eeecff;
+                        color: #6a5cf0;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-family: 'Sora', 'Inter', 'Segoe UI', Arial, sans-serif;
+                        font-size: 2rem;
+                        font-weight: 700;
+                    `;
+                    photo.parentNode.appendChild(fallback);
+                }, { once: true });
+            }
+        });
+    </script>
 </body>
 
 </html>

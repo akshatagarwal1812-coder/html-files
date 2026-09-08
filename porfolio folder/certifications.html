@@ -6,32 +6,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Certifications</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600&display=swap');
+
         * {
             box-sizing: border-box;
         }
 
         body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            color: #333;
+            font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+            color: #2b2d3a;
             margin: 0;
             padding: 0;
-            background: linear-gradient(-45deg, #f9f9f9, #e8f0fe, #f4f8fb, #eef6f9);
+            background: linear-gradient(-45deg, #f4f2ff, #eeecff, #fff8e6, #f4f2ff);
             background-size: 400% 400%;
-            animation: gradientShift 15s ease infinite;
+            animation: gradientShift 18s ease infinite;
+            min-height: 100vh;
         }
 
         @keyframes gradientShift {
-            0% {
-                background-position: 0% 50%;
-            }
-
-            50% {
-                background-position: 100% 50%;
-            }
-
-            100% {
-                background-position: 0% 50%;
-            }
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         main {
@@ -42,23 +37,171 @@
 
         main section {
             background-color: #fff;
-            border-radius: 8px;
-            padding: 30px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            border-radius: 20px;
+            padding: 34px;
+            box-shadow: 0 12px 30px -14px rgba(123, 110, 246, 0.35);
             text-align: center;
             animation: fadeInUp 0.7s ease both;
         }
 
         @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(25px);
-            }
+            from { opacity: 0; transform: translateY(25px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
 
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        main section h2 {
+            font-family: 'Sora', 'Inter', sans-serif;
+            font-weight: 700;
+            font-size: 1.7rem;
+            color: #2b2d3a;
+            margin: 0 0 6px;
+        }
+
+        main section .subtitle {
+            color: #6a5cf0;
+            font-size: 0.95rem;
+            margin: 0 0 30px;
+        }
+
+        .cert-grid {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+            gap: 22px;
+            margin: 0;
+            padding: 0;
+        }
+
+        .cert-grid li {
+            background: #faf9ff;
+            border: 1px solid #eeecff;
+            border-radius: 16px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .cert-grid li:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 30px -18px rgba(123, 110, 246, 0.5);
+        }
+
+        .cert-thumb-wrap {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            aspect-ratio: 4 / 3;
+            background: #eeecff;
+            border: 3px solid #fff;
+            box-shadow: 0 0 0 3px #7b6ef6;
+            cursor: pointer;
+        }
+
+        .cert-thumb-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .cert-thumb-wrap:hover img {
+            transform: scale(1.06);
+        }
+
+        .cert-thumb-wrap .zoom-hint {
+            position: absolute;
+            inset: auto 0 0 0;
+            background: rgba(43, 45, 58, 0.65);
+            color: #fff;
+            font-size: 0.75rem;
+            padding: 5px 0;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .cert-thumb-wrap:hover .zoom-hint {
+            opacity: 1;
+        }
+
+        .cert-thumb-wrap.img-error {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6a5cf0;
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 10px;
+            text-align: center;
+            cursor: default;
+        }
+
+        .cert-title {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: #2b2d3a;
+        }
+
+        footer {
+            text-align: center;
+            padding: 26px 20px 40px;
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 0.85rem;
+            color: #6b6f7b;
+        }
+
+        /* ---------- Lightbox ---------- */
+
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            background: rgba(20, 15, 45, 0.72);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+            z-index: 100;
+        }
+
+        .lightbox.is-open {
+            display: flex;
+        }
+
+        .lightbox img {
+            max-width: min(90vw, 700px);
+            max-height: 85vh;
+            border-radius: 12px;
+            box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.5);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 22px;
+            right: 28px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            background: #fff;
+            color: #2b2d3a;
+            font-size: 1.3rem;
+            line-height: 1;
+            cursor: pointer;
+        }
+
+        .lightbox-close:hover {
+            background: #ffcf3f;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            body { animation: none; }
+            main section { animation: none; }
+            .cert-thumb-wrap img { transition: none; }
         }
     </style>
 </head>
@@ -68,27 +211,102 @@
     <main>
         <section>
             <h2>My Certifications</h2>
-            <ul>
-                <li>Certification 1
-                    <img src="certifications/python-3.jpg" alt="Python 3 Certification">
+            <p class="subtitle">Click any certificate to view it full size.</p>
+
+            <ul class="cert-grid">
+                <li>
+                    <div class="cert-thumb-wrap" data-full="certifications/python-3.jpg">
+                        <img src="python 3.jpg" alt="Python 3 Certification">
+                        <span class="zoom-hint">Click to enlarge</span>
+                    </div>
+                    <span class="cert-title">Python 3 Certification</span>
                 </li>
-                <li>Certification 2
-                    <img src="certifications/python-certificate-final.jpg" alt="Python Certificate Final">
+                <li>
+                    <div class="cert-thumb-wrap" data-full="certifications/python-certificate-final.jpg">
+                        <img src="python certificate final.jpg" alt="Python Certificate Final">
+                        <span class="zoom-hint">Click to enlarge</span>
+                    </div>
+                    <span class="cert-title">Python Certificate — Final</span>
                 </li>
-                <li>Certification 3
-                    <img src="certifications/python-initial-certificate.jpg" alt="Python Initial Certificate">
+                <li>
+                    <div class="cert-thumb-wrap" data-full="certifications/python-initial-certificate.jpg">
+                        <img src="python initial certificate.jpg" alt="Python Initial Certificate">
+                        <span class="zoom-hint">Click to enlarge</span>
+                    </div>
+                    <span class="cert-title">Python Certificate — Initial</span>
                 </li>
-                <li>Certification 4
-                    <img src="certifications/python-oop-certificate.jpg" alt="Python OOP Certificate">
+                <li>
+                    <div class="cert-thumb-wrap" data-full="certifications/python-oop-certificate.jpg">
+                        <img src="python oop certificate.jpg" alt="Python OOP Certificate">
+                        <span class="zoom-hint">Click to enlarge</span>
+                    </div>
+                    <span class="cert-title">Python OOP Certificate</span>
                 </li>
             </ul>
         </section>
     </main>
 
     <footer>
-        <p>&copy; 2024 My Portfolio. All rights reserved.</p>
+        <p>&copy; <span id="year">2024</span> My Portfolio. All rights reserved.</p>
     </footer>
 
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" id="lightboxClose" aria-label="Close">&times;</button>
+        <img id="lightboxImg" src="" alt="">
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // Always-current footer year
+            const yearEl = document.getElementById('year');
+            if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+            // Graceful fallback if a certificate image is missing
+            document.querySelectorAll('.cert-thumb-wrap img').forEach(img => {
+                img.addEventListener('error', () => {
+                    const wrap = img.closest('.cert-thumb-wrap');
+                    wrap.classList.add('img-error');
+                    wrap.innerHTML = 'Image not found<br>' + img.getAttribute('src');
+                }, { once: true });
+            });
+
+            // Lightbox
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightboxImg');
+            const lightboxClose = document.getElementById('lightboxClose');
+
+            function openLightbox(src, alt) {
+                lightboxImg.src = src;
+                lightboxImg.alt = alt;
+                lightbox.classList.add('is-open');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeLightbox() {
+                lightbox.classList.remove('is-open');
+                lightboxImg.src = '';
+                document.body.style.overflow = '';
+            }
+
+            document.querySelectorAll('.cert-thumb-wrap:not(.img-error)').forEach(wrap => {
+                wrap.addEventListener('click', () => {
+                    if (wrap.classList.contains('img-error')) return;
+                    const full = wrap.getAttribute('data-full');
+                    const alt = wrap.querySelector('img') ? wrap.querySelector('img').alt : '';
+                    openLightbox(full, alt);
+                });
+            });
+
+            lightboxClose.addEventListener('click', closeLightbox);
+            lightbox.addEventListener('click', (e) => {
+                if (e.target === lightbox) closeLightbox();
+            });
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') closeLightbox();
+            });
+        });
+    </script>
 </body>
 
 </html>
